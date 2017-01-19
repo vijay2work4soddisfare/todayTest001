@@ -10,7 +10,6 @@ export class AddOtherUsersComponent{
 @Input('position') set getPos(position){
 		this.lat=position[0].coords.latitude;
 		this.lng=position[0].coords.longitude;
-		//console.log("add user component",position);
 		console.log("add user component, lat: ",this.lat+" lng: ",this.lng);
 	}
 	lat;
@@ -22,19 +21,9 @@ export class AddOtherUsersComponent{
 	lngLess:FirebaseListObservable<any>;
   constructor(private af:AngularFire) { 
   		this.otheruser=this.af.database.list("otherUsers/");
-
-  	  	/*this.great=af.database.list("otherUsers/",{query:{
-  		//orderByChild:'latitude',
-  		startAt: this.lat,
-  		//limitToLast:5
-  	}});*/
-  	
-
-
   }
   pos;
 	markerDragEnd($event){
-	  	//console.log($event);
 	  	this.pos=$event;
 	}
 	send(){
@@ -51,6 +40,7 @@ export class AddOtherUsersComponent{
 		this.othersList.push({"latitude":x.latitude,"longitude":x.longitude});
 	}
 	compWithLat(){
+		this.getAllLists();
 	 	console.log("Compare with Lat");
 	  	this.latLess.subscribe(snapshot=>{
 //	  		console.log("lat less",snapshot);
@@ -114,57 +104,7 @@ export class AddOtherUsersComponent{
 	  	});
 		
 	}
-	compWithLng(){
-	 	console.log("Compare with Lng");
-	  	this.lngLess.subscribe(snapshot=>{
-	  		if(snapshot.length>0) {
-		  		snapshot.map(y => {
-		  			//console.log(y);
-		  			this.latLess.subscribe(latLessVal=>{
-		  				latLessVal.map(x=>{
-		  					//console.log("lnglessVal",x);
-		  					if(x.latitude==y.latitude) {
-		  						console.log(y);
-		  					}
-		  				});
-		  			});
-		  			this.latGreat.subscribe(latGreatVal=>{
-		  				latGreatVal.map(x=>{
-		  					//console.log("lnglessVal",x);
-		  					if(x.latitude==y.latitude) {
-		  						console.log(y);
-		  					}
-		  				});
-		  			});
-		  		});
-	  		}
-	  	});
-	  	this.lngGreat.subscribe(snapshot=>{
-	  		//console.log("lat Great",snapshot);
-	  		if(snapshot.length>0) {
-		  		snapshot.map(y => {
-		  			//console.log(y);
-		  			this.latLess.subscribe(latLessVal=>{
-		  				latLessVal.map(x=>{
-		  					//console.log("lnglessVal",x);
-		  					if(x.latitude==y.latitude) {
-		  						console.log(y);
-		  					}
-		  				});
-		  			});
-		  			this.latGreat.subscribe(latGreatVal=>{
-		  				latGreatVal.map(x=>{
-		  					//console.log("lnglessVal",x);
-		  					if(x.latitude==y.latitude) {
-		  						console.log(y);
-		  					}
-		  				});
-		  			});
-		  		});
-	  		}
-	  	});
-		
-	}
+	
 	latLessMap(){
 		console.log("latLess");
   	  	this.latLess=this.af.database.list("otherUsers/",{query:{
@@ -188,16 +128,7 @@ export class AddOtherUsersComponent{
 	  		orderByChild:'longitude',
 	  		endAt: this.lng,
 	  		limitToLast:5
-	  		//endAt: this.lat,
-	  		//orderByKey: false
-	  		/*limitToFirst:2,
-	  		orderByKey: false*/
 	  	}});
-	  	//this.lngLess.subscribe(snapshot=>{
-	  		//console.log("lng less");
-	  		//snapshot.map(y => console.log(y));
-	  		//console.log(snapshot);
-	  	//});
 	}
 	lngGreatMap(){
 		console.log("lngGreat");
@@ -206,10 +137,5 @@ export class AddOtherUsersComponent{
 	  		startAt: this.lng,
 	  		limitToFirst:5
 	  	}});
-	  	//this.lngGreat.subscribe(snapshot=>{
-			//console.log("lng Great");
-	  		//snapshot.map(y => console.log(y));
-	  		//console.log(snapshot);
-	  	//});
 	}
 }
