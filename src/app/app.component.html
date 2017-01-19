@@ -1,0 +1,14 @@
+<div *ngIf="currentUserInfo">
+	<md-card *ngIf="correct">
+		<app-map-my-area *ngIf="gotPosition" [position]="position" (onClose)="send($event)"></app-map-my-area>
+	</md-card>
+	<md-card *ngIf="!correct">
+		<app-map-update *ngIf="gotPosition" [position]="position" (onClose)="updatePos($event)"></app-map-update>
+	</md-card>
+</div>
+<div *ngIf="!currentUserInfo">
+	<md-card>
+		<app-add-other-users *ngIf="gotPosition" [position]="position"></app-add-other-users>
+	</md-card>
+</div>
+<button md-button (click)="currentUserInfo=!currentUserInfo">toogle</button>

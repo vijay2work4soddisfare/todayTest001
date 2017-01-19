@@ -1,0 +1,16 @@
+<sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="18">
+	<sebm-google-map-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)">
+    </sebm-google-map-marker>
+    <sebm-google-map-marker *ngFor="let item of othersList" [latitude]="item.latitude" [longitude]="item.longitude">
+    </sebm-google-map-marker>
+    <!--sebm-google-map-marker *ngFor="let item of latLess | async" [latitude]="item.latitude" [longitude]="item.longitude">
+    </sebm-google-map-marker>
+    <sebm-google-map-marker *ngFor="let item of lngLess | async" [latitude]="item.latitude" [longitude]="item.longitude">
+    </sebm-google-map-marker>
+    <sebm-google-map-marker *ngFor="let item of lngGreat | async" [latitude]="item.latitude" [longitude]="item.longitude">
+    </sebm-google-map-marker-->
+</sebm-google-map>
+<button (click)="send()" md-raised-button>Add</button>
+<button (click)="getAllLists()" md-raised-button>Get all lists</button>
+<button (click)="compWithLat()" md-raised-button>compate with lat</button>
+<button (click)="compWithLng()" md-raised-button>Compare with lng</button>
